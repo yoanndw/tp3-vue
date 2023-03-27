@@ -2,6 +2,9 @@
 <!-- eslint-disable constructor-super -->
 <!-- eslint-disable constructor-super -->
 <template>
+  <input v-model="newTask" />
+  <button @click="createTask()">Create task</button>
+
   <ul>
     <TaskComponent
       v-for="(t,i) in tasks"
@@ -23,10 +26,16 @@ import Task from '@/components/Task'
 })
 export default class Todos extends Vue {
   tasks: Task[] = [];
+  newTask: string = '';
 
   public created() {
     this.tasks.push(new Task('Code'))
     this.tasks.push(new Task('Eat'))
+  }
+
+  createTask() {
+    this.tasks.push(new Task(this.newTask))
+    this.newTask = ''
   }
 }
 </script>
