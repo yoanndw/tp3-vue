@@ -12,15 +12,25 @@
       :task="t"
     /> <!-- v-bind:title -> prop title du component -->
   </ul>
+
+  <footer>
+    <span>
+      {{ remainingTasks.length }} remaining task(s).
+    </span>
+  </footer>
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue'
+import { computed, ref, onBeforeMount } from 'vue'
 import Task from './Task'
 import TaskComponent from './TaskComponent.vue'
 
 const tasks = ref([] as Task[])
 const newTask = ref('')
+
+const remainingTasks = computed(() => {
+  return tasks.value.filter(t => !t.done)
+})
 
 onBeforeMount(() => {
   tasks.value.push(new Task('Code'))

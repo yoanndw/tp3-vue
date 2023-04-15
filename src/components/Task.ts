@@ -7,6 +7,6 @@ export default class Task {
 
   public toggle() {
     this.done = !this.done
-    console.log('Toggle, now done = ' + this.done)
+    // console.log('Toggle, now done = ' + this.done)
   }
 }
