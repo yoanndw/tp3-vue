@@ -1,19 +1,21 @@
 <template>
   <li>
     <input type="checkbox" @click="check()"/>
-    <p>{{ props.title }}</p>
+    <p>{{ props.task.title }}</p>
     <!-- <p>{{ done }}</p> -->
   </li>
 </template>
 
 <script setup lang="ts">
 import { ref, defineProps } from 'vue'
+import Task from './Task'
 
-const props = defineProps(['title'])
-const done = ref(false)
+const props = defineProps<{
+  task: Task
+}>()
 
 function check() {
-  done.value = !done.value
+  props.task.toggle()
 }
 </script>
 

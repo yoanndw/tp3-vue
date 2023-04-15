@@ -9,7 +9,7 @@
     <TaskComponent
       v-for="(t,i) in tasks"
       :key="i"
-      :title="t.title"
+      :task="t"
     /> <!-- v-bind:title -> prop title du component -->
   </ul>
 </template>
