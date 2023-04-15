@@ -5,9 +5,16 @@
   <input v-model="newTask" />
   <button @click="createTask()">Create task</button>
 
+  <br>
+
+  <p>Filter: </p>
+  <button @click="tasksFilter = 'all'">All</button>
+  <button @click="tasksFilter = 'remaining'">Remaining</button>
+  <button @click="tasksFilter = 'done'">Done</button>
+
   <ul>
     <TaskComponent
-      v-for="(t,i) in tasks"
+      v-for="(t,i) in shownTasks"
       :key="i"
       :task="t"
     /> <!-- v-bind:title -> prop title du component -->
@@ -27,9 +34,18 @@ import TaskComponent from './TaskComponent.vue'
 
 const tasks = ref([] as Task[])
 const newTask = ref('')
+const tasksFilter = ref('all')
 
-const remainingTasks = computed(() => {
-  return tasks.value.filter(t => !t.done)
+const filters = {
+  all: () => tasks.value,
+  done: () => tasks.value.filter(t => t.done),
+  remaining: () => tasks.value.filter(t => !t.done)
+}
+
+const remainingTasks = computed(filters.remaining)
+
+const shownTasks = computed(() => {
+  return filters[tasksFilter.value]()
 })
 
 onBeforeMount(() => {
