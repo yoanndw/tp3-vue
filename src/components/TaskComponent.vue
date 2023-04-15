@@ -1,23 +1,19 @@
 <template>
   <li>
     <input type="checkbox" @click="check()"/>
-    <p>{{ model.title }}</p>
+    <p>{{ props.title }}</p>
+    <!-- <p>{{ done }}</p> -->
   </li>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import Task from './Task'
+<script setup lang="ts">
+import { ref, defineProps } from 'vue'
 
-@Options({
-  props: {
-    model: Task
-  }
-})
-export default class TaskComponent extends Vue {
-  check() {
-    this.model.toggle()
-  }
+const props = defineProps(['title'])
+const done = ref(false)
+
+function check() {
+  done.value = !done.value
 }
 </script>
 

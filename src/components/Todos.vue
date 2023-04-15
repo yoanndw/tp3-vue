@@ -9,34 +9,27 @@
     <TaskComponent
       v-for="(t,i) in tasks"
       :key="i"
-      :model="t"
+      :title="t.title"
     /> <!-- v-bind:title -> prop title du component -->
   </ul>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import TaskComponent from '@/components/TaskComponent.vue'
-import Task from '@/components/Task'
+<script setup lang="ts">
+import { ref, onBeforeMount } from 'vue'
+import Task from './Task'
+import TaskComponent from './TaskComponent.vue'
 
-@Options({
-  components: {
-    TaskComponent
-  }
+const tasks = ref([] as Task[])
+const newTask = ref('')
+
+onBeforeMount(() => {
+  tasks.value.push(new Task('Code'))
+  tasks.value.push(new Task('Eat'))
 })
-export default class Todos extends Vue {
-  tasks: Task[] = [];
-  newTask: string = '';
 
-  public created() {
-    this.tasks.push(new Task('Code'))
-    this.tasks.push(new Task('Eat'))
-  }
-
-  createTask() {
-    this.tasks.push(new Task(this.newTask))
-    this.newTask = ''
-  }
+function createTask() {
+  tasks.value.push(new Task(newTask.value))
+  newTask.value = ''
 }
 </script>
 
