@@ -1,21 +1,28 @@
 <template>
   <li>
-    <input type="checkbox" @click="check()"/>
-    <p>{{ props.task.title }}</p>
+    <input
+      type="checkbox"
+      :value="modelValue.done"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+    />
+
+    <p>{{ modelValue.title }}</p>
     <!-- <p>{{ done }}</p> -->
   </li>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 import Task from './Task'
 
 const props = defineProps<{
-  task: Task
+  modelValue: Task
 }>()
 
+const updateEmit = defineEmits(['update:modelValue'])
+
 function check() {
-  props.task.toggle()
+  props.modelValue.toggle()
 }
 </script>
 
