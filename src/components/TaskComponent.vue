@@ -3,7 +3,7 @@
     <input
       type="checkbox"
       :value="modelValue.done"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+      @input="check($event)"
     />
 
     <p>{{ modelValue.title }}</p>
@@ -12,17 +12,19 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps } from 'vue'
 import Task from './Task'
 
 const props = defineProps<{
   modelValue: Task
 }>()
 
-const updateEmit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
-function check() {
-  props.modelValue.toggle()
+function check(event: Event) {
+  const newDone = (event.target as HTMLInputElement).checked;
+  props.modelValue.done = newDone;
+  // console.log(newDone, typeof(newDone));
+  emit('update:modelValue', props.modelValue)
 }
 </script>
 
