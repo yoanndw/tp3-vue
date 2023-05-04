@@ -14,8 +14,8 @@
 
   <ul>
     <TaskComponent
-      v-for="(t,i) in shownTasks"
-      :key="i"
+      v-for="(t, i) in shownTasks"
+      :key="t.id"
       v-model="shownTasks[i]"
     /> <!-- v-bind:title -> prop title du component -->
   </ul>
